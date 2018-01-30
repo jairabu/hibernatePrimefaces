@@ -1,7 +1,5 @@
 ## Quick start
 
-To run Spring Boot backend:
-
 - Install PostgreSQL and create a database called "filmes"
 - Update the password of the database at the file persistence.xml 
 - Run filmes.xhtml on a Webserver to start Primefaces
