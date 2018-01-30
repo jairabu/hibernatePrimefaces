@@ -1,3 +1,5 @@
+A simple example of a CRUD application in Java using Hibernate and Primefaces.
+
 ## Quick start
 
 - Install PostgreSQL and create a database called "filmes"
