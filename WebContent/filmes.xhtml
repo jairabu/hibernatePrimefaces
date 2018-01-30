@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<h:body>
+
+<ui:composition template="/template/commonLayout.xhtml">    	
+    <ui:define name="content">
+
+	<h:form id="formularioFilmes">
+		<p:messages id="growl" closable="true"></p:messages>
+
+		<p:panel header="Cadastro de Filmes" style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="10">
+				<h:outputText value="Nome" />
+				<h:inputText value="#{filmeController.filme.nome}"></h:inputText>
+
+				<h:outputText value="Ano" />
+				<p:inputNumber decimalPlaces="0" maxlength="4" thousandSeparator=""
+					maxValue="9999" value="#{filmeController.filme.ano}"></p:inputNumber>
+
+				<h:outputText value="Nota" />
+				<p:inputNumber decimalPlaces="1" decimalSeparator=","
+					thousandSeparator="" maxValue="10" minValue="0"
+					value="#{filmeController.filme.nota}"></p:inputNumber>
+			</h:panelGrid>
+
+			<f:facet name="footer">
+				<p:commandButton value="Salvar"
+					rendered="#{filmeController.modoEdicao == false}"
+					actionListener="#{filmeController.salvar()}"
+					update=":formularioFilmes"></p:commandButton>
+
+				<p:commandButton value="Atualizar"
+					rendered="#{filmeController.modoEdicao == true}"
+					actionListener="#{filmeController.atualizar()}"
+					update=":formularioFilmes"></p:commandButton>
+
+				<p:commandButton value="Remover"
+					rendered="#{filmeController.modoEdicao == true}"
+					actionListener="#{filmeController.remover()}"
+					update=":formularioFilmes"></p:commandButton>
+
+				<p:commandButton value="Cancelar"
+					rendered="#{filmeController.modoEdicao == true}"
+					actionListener="#{filmeController.cancelar()}"
+					update=":formularioFilmes"></p:commandButton>
+			</f:facet>
+		</p:panel>
+
+		<p:dataTable var="filme" value="#{filmeController.filmes}" rows="10"
+			paginator="true" selectionMode="single"
+			selection="#{filmeController.filmeSelecionado}" rowKey="#{filme.id}">
+			<p:ajax event="rowSelect" listener="#{filmeController.selecionar}"
+				update=":formularioFilmes" />
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{filme.nome}" />
+			</p:column>
+
+			<p:column headerText="Ano">
+				<h:outputText value="#{filme.ano}" />
+			</p:column>
+
+			<p:column headerText="Nota">
+				<h:outputText value="#{filme.nota}" />
+			</p:column>
+		</p:dataTable>
+
+		<p:chart type="pie" model="#{filmeController.grafico}"
+			style="width:400px;height:300px" />
+	</h:form>
+	
+	</ui:define>
+</ui:composition>
+
+</h:body>
+</html>
